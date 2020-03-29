@@ -1,0 +1,68 @@
+High-Performance Networking Programming
+
+  Performance is a feature. (ref. https://hpbn.co/)
+
+ Resources
+
+   https://www.linuxjournal.com/article/9815
+
+    Polipo User Manual: www.pps.jussieu.fr/~jch/software/polipo/manual
+
+    TCP Tuning and Network Troubleshooting: www.onlamp.com/pub/a/onlamp/2005/11/17/tcp_tuning.html
+
+    Wikipedia's Definition of Bandwidth: en.wikipedia.org/wiki/Bandwidth
+
+    Advanced Networking Techniques: beej.us/guide/bgnet/output/html/multipage/advanced.html
+
+    TCP and Congestion Control Slides: www.nishida.org/soi1/mgp00001.html
+
+
+   http://www.brendangregg.com/overview.html
+
+
+    perf Examples: Linux perf_events one-liners, examples, and visualizations.
+    eBPF Tracing Tools: Linux enhanced BPF tools for performance analysis.
+    The USE Method: a performance methodology for identifying resource bottlenecks.
+    USE Method: Rosetta Stone: performance checklists for different OSes.
+    Off-CPU Analysis: a methodology for analyzing blocked time, complimentary to CPU analysis.
+    TSA Method: the methodology of thread state analysis.
+    Active Benchmarking: a methodology for performing accurate benchmarks.
+    Working Set Size Estimation: showing techniques for understanding main memory usage.
+    CPU Flame Graphs: a visualization for sampled stack traces.
+    Off-CPU Flame Graphs: different techniques for analyzing blocking events.
+    Memory Flame Graphs: techniques for efficiently analyzing leaks and growth.
+    Latency Heat Maps: a visualization for latency distributions over time.
+    Utilization Heat Maps: different visualizations for resource utilization.
+    Frequency Trails: a visualization for multiple distributions.
+
+   Articles
+
+    KPTI/KAISER Meltdown Initial Performance Regressions, analyzing the Linux kernel regression we'll all see (2018).
+    Linux Load Averages: Solving the Mystery, where I explained the inclusion of the uninterruptible sleep state (2017).
+    CPU Utilization is Wrong: a post explaining the growing problem of memory stall cycles dominating the %CPU metric (2017).
+    gdb Debugging Full Example (Tutorial): a post to share an entire debugging, including output and explanations (2016).
+    The Flame Graph article for ACMQ and CACM that defines and explains flame graphs, and discusses future developments (2016).
+    Linux Performance Analysis in 60,000 Milliseconds (PDF): for the Netflix Tech Blog, by myself and the perf team (2015).
+    Java in Flames (PDF): for the Netflix Tech Blog, introducing mixed-mode Java flame graphs (2015).
+    eBPF One Small Step: introducing Linux eBPF and explaining the capabilities this feature brings (2015).
+    Ftrace: The Hidden Light Switch: an lwn.net article about Linux ftrace (2014).
+    The Benchmark Paradox: a short blog post explaining a seeming paradox in benchmark evaluations (2014).
+    strace Wow Much Syscall: my warning blog post about strace(1), along with many bad strace-related jokes (2014).
+    The Case of the Clumsy Kernel (PDF): a kernel performance analysis article for USENIX ;login (2013).
+    The Greatest Tool that Never Worked: har: about the value of ideas in software screenshots (2013).
+    Top 10 DTrace Scripts for Mac OS X: included an intro to command line DTrace usage (2011).
+    Visualizing System Latency: an article for ACMQ and CACM about latency heat maps (2010).
+
+   Software
+
+    perf-tools: perf analysis tools based on Linux perf_events and ftrace.
+    FlameGraph: a visualization for sampled stack traces, used for performance analysis.
+    HeatMap: an program for generating interactive SVG heat maps from trace data.
+    Specials: "special" tools for system administrators.
+
+
+
+    // Function pointer: what is the performance compare to a virtual function call?!
+    // typedef void (WebClient::*onMessage_callback_t)(char *message, size_t length);
+    // typedef void (*onMessage_callback_t)(WebSocket *, char *, size_t);
+    // onMessage_callback_t _onMessage_callback_ptr;

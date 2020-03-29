@@ -1,0 +1,10 @@
+TBB
+
+Threading Building Blocks 2019 Update 8
+
+Stable release Apache License Version 2.0
+
+Threading Building Blocks (TBB) lets you easily write parallel C++ programs that take full advantage of multicore performance, that are portable, composable and have future-proof scalability.
+
+
+https://github.com/intel/tbb

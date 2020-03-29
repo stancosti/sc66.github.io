@@ -1,0 +1,34 @@
+
+Configuration ... testing
+    A. MAX_HEADERS changed from 100 to 50
+    B. MAX_HEADER_BUFFER_SIZE changed from 2048 to 1024 seemed to increase the speeed for small message, but delayed the receival of the initial snapshot.
+        default: 2048, other: 4096, 8182
+
+Performance .. testing
+     testReceivePerformance()
+     test echo service: wss://echo.websocket.org
+     mTCP: a Highly Scalable User-level TCP Stack for Multicore Systems 
+
+Data Transmissions .. TCP_CORK
+    https://baus.net/on-tcp_cork/
+    ... highly recommend applying the TCP_NODELAY socket option which disables Nagle's algorithm. All calls to write() will then result in immediate transfer of data.
+
+Data Transmissions .. TCP_NODELAY and Small Buffer Writes
+    https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_MRG/1.3/html/Realtime_Tuning_Guide/sect-Realtime_Tuning_Guide-Application_Tuning_and_Deployment-TCP_NODELAY_and_Small_Buffer_Writes.html
+
+
+Asynchronous behavior
+    Sample: /tests/main.cpp -> testAsync()
+    A. define USE_LIBUV or USE_ASIO to control which eventing queue should be used
+    B. define UWS_THREADSAFE
+
+OpenSSL
+    A. Why does this setting affect performance so much? Commenting it out gives a performance boost of about 30 microseconds per message, down from 67!!!
+        SSL_set_mode(ssl, SSL_MODE_RELEASE_BUFFERS);
+
+Vars
+    a. A fork of uWS with some interesting notes:    https://git.generalassemb.ly/aurinelyl/das_meatballz/tree/master/node_modules/uws
+    b. Multiplexing TCP connections and avoiding the kernel IO botleneck:  https://github.com/mtcp-stack/mtcp
+    c. Specialized Network Programming Library for Stateful Middleboxes: 
+            http://mos.kaist.edu
+            https://github.com/mos-stack/mOS-networking-stack

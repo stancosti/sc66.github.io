@@ -1,0 +1,33 @@
+packet crafting and sniffing library
+
+http://average-coder.blogspot.com/
+http://libtins.github.io/
+
+
+
+https://www.codeproject.com/Articles/19886/Developing-a-SOHO-web-filter-step-by-step
+
+
+
+WebSocket over SPDY?
+
+
+PicoTCP is a free TCP/IP stack implementation
+    https://github.com/tass-belgium/picotcp
+
+
+
+
+lwip - A Lightweight TCPIP stack it's best to start learning about TCP/IP Stack
+    git clone git://git.savannah.nongnu.org/lwip.git
+
+
+
+iPerf3 is a tool for active measurements of the maximum achievable bandwidth on IP networks.
+    https://iperf.fr/
+
+
+
+C++ Ecosystem: Compilers, IDEs, Tools, Testing and More
+
+    https://www.bfilipek.com/2019/10/cppecosystem.html

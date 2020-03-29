@@ -1,0 +1,82 @@
+Successfull reconnect
+
+    251100 ________     19423 bytes ________       247 us      avg: 2.47  min:  0  max: 69
+    251200 ________     19301 bytes ________       256 us      avg: 2.56  min:  0  max: 62
+    251300 ________     19599 bytes ________       559 us      avg: 5.59  min:  0  max: 68
+    251400 ________     19308 bytes ________       127 us      avg: 1.27  min:  0  max: 38
+    Web.Timeout (1 out 3, 3000 ms)
+    Web.Timeout (2 out 3, 3000 ms)
+    Web.Timeout (3 out 3, 3000 ms)
+    Web.Connect (attempt 1 out of 3, every 5000 ms) ->Socket.Connect (ws-feed.pro.coinbase.com, 443, 1)->fd->ssl->connect->upgrade->response(521)->upgrade-confirmed->done.
+    Web.Receiving {"type": "subscribe","product_ids": ["BTC-USD"],"channels": ["level2","full"]}
+        100 ________    329545 bytes ________      7888 us      avg: 78.88  min:  0  max:641
+        200 ________     19418 bytes ________       200 us      avg: 2.00  min:  0  max: 71
+        300 ________     19462 bytes ________       421 us      avg: 4.21  min:  0  max: 64
+
+
+Failed disconnect  due to server side failure
+
+    386200 ________     19635 bytes ________       273 us      avg: 2.73  min:  0  max: 69
+    386300 ________     19418 bytes ________      1034 us      avg: 10.34  min:  0  max: 71
+    Web.Timeout (1 out 3, 3000 ms)
+    386400 ________     19876 bytes ________       263 us      avg: 2.63  min:  0  max: 61
+    386500 ________     19503 bytes ________       214 us      avg: 2.14  min:  0  max: 37
+    386600 ________     19922 bytes ________       279 us      avg: 2.79  min:  0  max: 47
+    WebSocket::closeFrame
+    Mkt.Subscriber (disconnected: CloudFlare WebSocket proxy restartingc0-4750-4a8a-bce4-0306e053557d","order_type":"limit","size":"0.23044000","price":"3565.71000000","side":"sell","client_oid":"9e21fe64-3099-11e9-a896-bdc8b52d04d6","product_id":"BTC-USD","sequence":7971378724,"time":"2019-02-14T20:46:35.299000Z"}�~)
+    WebSocket.Disconnect (session terminated)
+    Socket.Close (session terminated)
+    Mkt.Subscriber (failed)
+    Mkt.Subscriber (stopped)
+    Mkt.Subscriber (stop: requested by user)
+    WebSocket.Disconnect (requested by user)
+    Mkt.Subscriber (disconnected: requested by user)
+    Socket.Close (requested by user)
+    Segmentation fault (core dumped)
+
+
+Failed disconnect  due to client side failure
+
+    186800 ________     19510 bytes ________      4756 us      avg: 47.56  min:  0  max:121
+    186900 ________     19494 bytes ________     10899 us      avg: 108.99  min:  5  max:176
+    Web.Timeout (1 out 3, 3000 ms)
+    187000 ________     19615 bytes ________      9924 us      avg: 99.24  min:  6  max:166
+    187100 ________     19391 bytes ________      9027 us      avg: 90.27  min:  0  max:174
+    187200 ________     19303 bytes ________      5984 us      avg: 59.84  min:  0  max:107
+    187300 ________     19523 bytes ________      4442 us      avg: 44.42  min:  0  max:104
+    187400 ________     20081 bytes ________     10076 us      avg: 100.76  min:  2  max:163
+    Web.Timeout (1 out 3, 3000 ms)
+    187500 ________     19379 bytes ________      7537 us      avg: 75.37  min:  6  max:116
+    187600 ________     19185 bytes ________      8466 us      avg: 84.66  min:  4  max:158
+    187700 ________     19085 bytes ________      5753 us      avg: 57.53  min:  0  max:151
+    187800 ________     19373 bytes ________      3532 us      avg: 35.32  min:  0  max: 95
+    187900 ________     19234 bytes ________      4640 us      avg: 46.40  min:  6  max: 97
+    188000 ________     19208 bytes ________      8440 us      avg: 84.40  min:  5  max:160
+    188100 ________     19592 bytes ________     10691 us      avg: 106.91  min:  5  max:160
+    188200 ________     18879 bytes ________     10277 us      avg: 102.77  min:  4  max:164
+    Web.Timeout (1 out 3, 3000 ms)
+    Web.Timeout (2 out 3, 3000 ms)
+    188300 ________     19351 bytes ________      8085 us      avg: 80.85  min:  0  max:173
+    188400 ________     19749 bytes ________      6128 us      avg: 61.28  min:  0  max:108
+    188500 ________     19791 bytes ________      4815 us      avg: 48.15  min:  0  max: 90
+    188600 ________     19237 bytes ________      7090 us      avg: 70.90  min:  4  max:124
+    Web.Timeout (1 out 3, 3000 ms)
+    Web.Timeout (2 out 3, 3000 ms)
+    Web.Timeout (3 out 3, 3000 ms)
+    Web.Connect (attempt 1 out of 3, every 5000 ms) ->Socket.Connect (ws-feed.pro.coinbase.com, 443, 1)->invalid addrinfo
+    Mkt.Subscriber (error: cannot retrieve host information)
+    Mkt.Subscriber (error: failed to connect)
+    HttpSocket.Disconnect (session terminated)
+    Mkt.Subscriber (disconnected: session terminated)
+    Socket.Close (session terminated)
+    WebSocket.Disconnect (session terminated)
+    Mkt.Subscriber (disconnected: session terminated)
+    Socket.Close (session terminated)
+    Mkt.Subscriber (failed)
+    Mkt.Subscriber (stopped)
+
+    Mkt.Subscriber (stop: requested by user)
+    WebSocket.Disconnect (requested by user)
+    Mkt.Subscriber (disconnected: requested by user)
+    Socket.Close (requested by user)
+    Segmentation fault (core dumped)

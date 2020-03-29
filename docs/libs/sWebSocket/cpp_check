@@ -1,0 +1,5 @@
+Source:
+    http://cppcheck.sourceforge.net/manual.pdf
+
+Commands:
+    cppcheck --enable=all src

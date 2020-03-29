@@ -1,0 +1,34 @@
+Zero-copy TCP receive
+
+https://lwn.net/Articles/752188/
+
+In the performance-conscious world of high-speed networking, anything that can be done to avoid copying packet data is welcome. The MSG_ZEROCOPY feature added in 4.14 enables zero-copy transmission of data, but does not address the receive side of the equation. It now appears that the 4.18 kernel will include a zero-copy receive mechanism by Eric Dumazet to close that gap, at least for some relatively specialized applications.
+
+Packet reception starts in the kernel with the allocation of a series of buffers to hold packets as they come out of the network interface. As a general rule, the kernel has no idea what will show up next from the interface, so it cannot know in advance who the intended recipient of the next packet to arrive in a given buffer will be. An implementation of zero-copy reception will thus have to map these packet buffers into user-space memory after the packets come in and are associated with an open socket.
+
+That, in turn, implies a set of constraints that must be met. Mapping of memory into a process's address space is done on a per-page granularity; there is no way to map a fraction of a page. So inbound network data must be both page-aligned and page-sized when it ends up in the receive buffer, or it will not be possible to map it into user space. Alignment can be a bit tricky because the packets coming out of the interface start with the protocol headers, not the data the receiving process is interested in. It is the data that must be aligned, not the headers. Achieving this alignment is possible, but it requires cooperation from the network interface; in particular, it is necessary to use a network interface that is capable of splitting the packet headers into a different buffer as the packet comes in.
+
+It is also necessary to ensure that the data arrives in chunks that are a multiple of the system's page size, or partial pages of data will result. That can be done by setting the maximum transfer unit (MTU) size properly on the interface. That, in turn, can require knowledge of exactly what the incoming packets will look like; in a test program posted with the patch set, Dumazet sets the MTU to 61,512. That turns out to be space for fifteen 4096-byte pages of data, plus 40 bytes for the IPv6 header and 32 bytes for the TCP header.
+
+The core of Dumazet's patch set is the implementation of mmap() for TCP sockets. Normally, using mmap() on something other than an ordinary file creates a range of address space that can be used for purposes like communicating with a device. When it is called on a TCP socket, though, the behavior is a bit different. If the conditions are met (the next incoming data chunk is page-sized and page-aligned), the buffer(s) containing that data will be mapped into the calling process's address space, where it can be accessed directly. This operation also has the effect of consuming the incoming data, much as if it had been obtained with recvmsg() instead. That is, needless to say, an unusual side effect from an mmap() call.
+
+When the incoming data has been processed, the process should call munmap() to release the pages and free the buffer for another incoming packet.
+
+If things are not just right (there is only a partial page of data available, for example, or that data is not page-aligned), the mmap() call will fail, returning EINVAL. That will also happen if there is urgent data in the pipeline. In such cases, the call does not consume the data, and the application must fall back to recvmsg() to obtain it.
+
+It has long been conventional wisdom in the kernel community that zero-copy schemes dependent on memory-mapping tricks will struggle to outperform implementations that simply copy the data. There is quite a bit of overhead involved in setting up and tearing down these mappings. Indeed, Dumazet cautioned in the patch introduction that there may not be a benefit if the application uses a lot of threads, since the contention for the mmap_sem lock will become too expensive. But it is still natural to wonder if performing zero-copy packet reception in this way is worth the trouble.
+
+One way of reducing the cost would be to not call mmap() until several pages of data are available to be consumed, so that they can all be mapped in a single batch. The network stack provides a way to request that the application not be notified until a certain amount of data is pending in the form of the SO_RCVLOWAT option. That said, the socket() man page cautions:
+
+The select(2) and poll(2) system calls currently do not respect the SO_RCVLOWAT setting on Linux, and mark a socket readable when even a single byte of data is available. A subsequent read from the socket will block until SO_RCVLOWAT bytes are available.
+
+That shortcoming would make SO_RCVLOWAT useless for this purpose. That problem appears to to have been fixed in 2008 for the 2.6.28 kernel, though, so the man page is a bit behind the times. Even so, there were still some shortcomings with SO_RCVLOWAT, including spurious wakeups, that Dumazet fixed as a part of this series.
+
+In some benchmark results posted with the core patch, Dumazet shows some impressive improvements in packet-processing performance — from 129µs/MB to just 45µs/MB. Naturally, this is a tuned test running in a controlled setting, but it shows that there are indeed benefits to be had. Those benefits will be generally available before too long; networking maintainer Dave Miller has applied the series for the 4.18 merge window.
+
+
+
+
+ZERO_COPY_SOCKETS
+
+http://manpages.ubuntu.com/manpages/trusty/man9/zero_copy_sockets.9freebsd.html

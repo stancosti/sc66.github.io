@@ -1,0 +1,27 @@
+http://www.websocket.org/quantum.html
+
+With streaming, the browser sends a complete request, but the server sends and maintains an open response that is continuously updated and kept open indefinitely (or for a set period of time). The response is then updated whenever a message is ready to be sent, but the server never signals to complete the response, thus keeping the connection open to deliver future messages. However, since streaming is still encapsulated in HTTP, intervening firewalls and proxy servers may choose to buffer the response, increasing the latency of the message delivery. Therefore, many streaming Comet solutions fall back to long-polling in case a buffering proxy server is detected. Alternatively, TLS (SSL) connections can be used to shield the response from being buffered, but in that case the setup and tear down of each connection taxes the available server resources more heavily.
+
+Ultimately, all of these methods for providing real-time data involve HTTP request and response headers, which contain lots of additional, unnecessary header data and introduce latency. On top of that, full-duplex connectivity requires more than just the downstream connection from server to client. In an effort to simulate full-duplex communication over half-duplex HTTP, many of today's solutions use two connections: one for the downstream and one for the upstream. The maintenance and coordination of these two connections introduces significant overhead in terms of resource consumption and adds lots of complexity. Simply put, HTTP wasn't designed for real-time, full-duplex communication as you can see in the following figure, which shows the complexities associated with building a Comet web application that displays real-time data from a back-end data source using a publish/subscribe model over half-duplex HTTP.
+
+
+Websockets 101
+    https://lucumr.pocoo.org/2012/9/24/websockets-101/
+
+How Do Websockets Work?
+    https://sookocheff.com/post/networking/how-do-websockets-work/
+
+IANA Registry
+    http://www.iana.org/assignments/websocket/websocket.xml
+
+
+High Performance Browser Networking (book)
+    https://hpbn.co/
+
+
+
+Remarks
+
+A. WebSocket Multiplexing and Head-of-Line Blocking
+    WebSocket is susceptible to head-of-line blocking: messages can be split into one or more frames, but frames from different messages can’t be interleaved, as there is no equivalent to a "stream ID" found in the HTTP/2 framing mechanism; see Streams, Messages, and Frames).
+    As a result, a large message, even when split into multiple WebSocket frames, will block the delivery of frames associated with other messages. If your application is delivering latency-sensitive data, be careful about the payload size of each message and consider splitting large messages into multiple application messages!
